@@ -5,7 +5,7 @@ A Javascript mixin that conviniently handles binding to a DOM element for a widg
 
 When you mixin the DomListener to your own Javascript object, like so
 
-  _.extend(MyWidget, DomListener)
+    _.extend(MyWidget, DomListener)
 
 You get two extra methods: `attach()` - which attachs all event handlers specified (see below) and `detach()` detaches all of them.
 

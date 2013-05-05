@@ -30,6 +30,7 @@ var DomListener = (function(){
   }
 
   function listen(elm, evt, handler){
+    if (handler._bound) return
     handler._bound = bind(handler, this)
     if (elm.addEventListener){
       elm.addEventListener(evt, handler._bound)

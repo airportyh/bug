@@ -28,7 +28,6 @@ test('when detached no longer listens', function(){
   var o = {
     elm: elm,
     "elm:onclick": function(e){
-      assert.equal(e.type, 'click')
       called = true
     }
   }
@@ -40,6 +39,24 @@ test('when detached no longer listens', function(){
 
   // cleans up
   ok(undefined === o['elm:onclick']._bound)
+  document.body.removeChild(elm)
+})
+
+test('it doesnt bound twice if attached twice', function(){
+  var callCount = 0
+  var elm = document.createElement('div')
+  document.body.appendChild(elm)
+  var o = {
+    elm: elm,
+    "elm:onclick": function(e){
+      callCount++
+    }
+  }
+  extend(o, DomListener)
+  o.attach()
+  o.attach()
+  Simulate.click(elm)
+  equal(callCount, 1)
   document.body.removeChild(elm)
 })
 

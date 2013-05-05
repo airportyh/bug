@@ -9,6 +9,11 @@ When you mixin the DomListener to your own Javascript object, like so
 
 You get two extra methods: `attach()` - which attachs all event handlers specified (see below) and `detach()` detaches all of them.
 
+The event handlers in your object are specified by naming the property in the format `<property>:on<event>`. For example, the following event handler will attach to the `click` event of the element stored in the `elm` property of the object.
+
+    "elm:onclick": function(e){
+    }
+
 Full Example
 ------------
   

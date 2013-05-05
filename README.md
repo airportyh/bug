@@ -30,7 +30,7 @@ Full Example
       // "click" events to the DOM element in the "elm"
       // property
       "elm:onclick": function(e){
-  
+        console.log('elm was clicked!')
       },
       destroy: function(){
         this.detach() // detaches all event handlers in the

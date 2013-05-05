@@ -12,32 +12,32 @@ You get two extra methods: `attach()` - which attachs all event handlers specifi
 Full Example
 ------------
   
-  function Widget(elm){
-    this.elm = elm
-    this.attach() // attach all event handlers in the
-                  // specified format
-  }
-
-  extend(Widget.prototype, DomListener)
-
-  extend(Widget.prototype, {
-    // the following event handler will handle all
-    // "click" events to the DOM element in the "elm"
-    // property
-    "elm:onclick": function(e){
-
-    },
-    destroy: function(){
-      this.detach() // detaches all event handlers in the
+    function Widget(elm){
+      this.elm = elm
+      this.attach() // attach all event handlers in the
                     // specified format
     }
-  })
-
-  // a simple extend which behaves like underscore's extend
-  function extend(dst, src){
-    for (var prop in src)
-      dst[prop] = src[prop]
-  }
+  
+    extend(Widget.prototype, DomListener)
+  
+    extend(Widget.prototype, {
+      // the following event handler will handle all
+      // "click" events to the DOM element in the "elm"
+      // property
+      "elm:onclick": function(e){
+  
+      },
+      destroy: function(){
+        this.detach() // detaches all event handlers in the
+                      // specified format
+      }
+    })
+  
+    // a simple extend which behaves like underscore's extend
+    function extend(dst, src){
+      for (var prop in src)
+        dst[prop] = src[prop]
+    }
 
 Browser Support
 ---------------

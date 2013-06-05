@@ -7,9 +7,10 @@
     "example": "examples"
   },
   "dependencies": {
+  },
+  "devDependencies": {
     "tape": "~1.0.2"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "testem ci"
   },

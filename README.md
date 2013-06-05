@@ -1,11 +1,11 @@
-DomListener
+Bug
 ===========
 
 A Javascript mixin that conviniently handles binding to a DOM element for a widget class that you might write.
 
-When you mixin the DomListener to your own Javascript object, like so
+When you mixin `Bug` to your own Javascript object, like so
 
-    extend(MyWidget.prototype, DomListener)
+    extend(MyWidget.prototype, Bug)
 
 You get two extra methods: 
 
@@ -26,7 +26,7 @@ Full Example
                     // specified format
     }
   
-    extend(Widget.prototype, DomListener)
+    extend(Widget.prototype, Bug)
   
     extend(Widget.prototype, {
       // the following event handler will handle all
@@ -46,6 +46,25 @@ Full Example
       for (var prop in src)
         dst[prop] = src[prop]
     }
+
+On Event Emitters
+-----------------
+
+Bug also can listen to event emitters. This is an example in node
+
+    var Bug = require('bug')
+    var EventEmitter = require('events').EventEmitter
+
+    var bar = new EventEmitter
+    var foo = {
+      "bar:onmessage": function(msg){
+        console.log("Got message", msg)
+      },
+      bar: bar
+    }
+    extend(obj, Bug)
+    obj.attach()
+    bar.emit('message', 'Hello!')
 
 Browser Support
 ---------------

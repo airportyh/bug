@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/airportyh/domlistener.git"
+    "url": "git://github.com/airportyh/bug.git"
   },
   "keywords": [
     "events"

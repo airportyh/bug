@@ -10,7 +10,7 @@ test('when attached listens to specified dom event', function(){
       called = true
     }
   }
-  extend(o, DOMListener)
+  extend(o, Bug)
   o.attach()
   Simulate.click(elm)
   ok(called, "how come you don't call?")
@@ -27,7 +27,7 @@ test('when detached no longer listens', function(){
       called = true
     }
   }
-  extend(o, DOMListener)
+  extend(o, Bug)
   o.attach()
   o.detach()
   Simulate.click(elm)
@@ -48,7 +48,7 @@ test('it doesnt bound twice if attached twice', function(){
       callCount++
     }
   }
-  extend(o, DOMListener)
+  extend(o, Bug)
   o.attach()
   o.attach()
   Simulate.click(elm)
@@ -61,7 +61,7 @@ test('it also binds event emitters', function(){
   var foo = {}
   var bar = foo.bar = {}
   extend(bar, EventEmitter.prototype)
-  extend(foo, DOMListener)
+  extend(foo, Bug)
   foo['bar:onmessage'] = function(msg){
     equal(msg, 'hello')
   }

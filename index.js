@@ -2,7 +2,7 @@
 
   var EventPropReg = /^([a-zA-Z][$a-zA-Z0-9]+):on([a-z]+)$/
 
-  var DOMListener = {
+  var Bug = {
     attach: function(){
       iterateAndCallFuncOnMatch.call(this, listen)
     },
@@ -13,11 +13,11 @@
 
   // Shims for CommonJS, Require.js, and just the browser
   if (typeof module !== 'undefined' && module.exports){
-    module.exports = DOMListener
+    module.exports = Bug
   }else if (typeof define !== 'undefined' && define.amd){
-    define(function(){ return DOMListener })
+    define(function(){ return Bug })
   }else if (typeof window !== 'undefined'){
-    window.DOMListener = DOMListener
+    window.Bug = Bug
   }
 
   function iterateAndCallFuncOnMatch(func){

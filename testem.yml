@@ -1,3 +1,8 @@
 framework: qunit
+launchers:
+  node:
+    command: node node_tests.js
+    protocol: tap
 launch_in_dev:
 - chrome
+- node

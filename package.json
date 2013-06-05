@@ -1,13 +1,12 @@
 {
   "name": "bug",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A mixin that allows object to easily listen in on child objects.",
   "main": "index.js",
   "directories": {
     "example": "examples"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "tape": "~1.0.2"
   },

@@ -17,6 +17,16 @@ The event handlers in your object are specified by naming the property in the fo
     "elm:onclick": function(e){
     }
 
+Install with Bower
+------------------
+
+    bower install bug
+
+Install with NPM
+----------------
+
+    npm install bug
+
 Full Example
 ------------
   

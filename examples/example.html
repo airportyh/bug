@@ -10,7 +10,7 @@ function Widget(elm){
   this.elm = elm
 }
 
-extend(Widget.prototype, DOMListener)
+extend(Widget.prototype, Bug)
 
 extend(Widget.prototype, {
   "elm:onclick": function(e){

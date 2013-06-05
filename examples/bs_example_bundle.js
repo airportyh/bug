@@ -27,7 +27,7 @@ widget.attach()
 
   var EventPropReg = /^([a-zA-Z][$a-zA-Z0-9]+):on([a-z]+)$/
 
-  var DOMListener = {
+  var Bug = {
     attach: function(){
       iterateAndCallFuncOnMatch.call(this, listen)
     },
@@ -35,12 +35,14 @@ widget.attach()
       iterateAndCallFuncOnMatch.call(this, unlisten)
     }
   }
-  if (typeof module !== 'undefined'){
-    module.exports = DOMListener
-  }else if (typeof define !== 'undefined'){
-    define(function(){ return DOMListener })
+
+  // Shims for CommonJS, Require.js, and just the browser
+  if (typeof module !== 'undefined' && module.exports){
+    module.exports = Bug
+  }else if (typeof define !== 'undefined' && define.amd){
+    define(function(){ return Bug })
   }else if (typeof window !== 'undefined'){
-    window.DOMListener = DOMListener
+    window.Bug = Bug
   }
 
   function iterateAndCallFuncOnMatch(func){
@@ -68,6 +70,8 @@ widget.attach()
       elm.addEventListener(evt, handler._bound)
     }else if (elm.attachEvent){
       elm.attachEvent('on' + evt, handler._bound)
+    }else if (elm.on && elm.removeListener){
+      elm.on(evt, handler._bound)
     }
   }
 
@@ -76,6 +80,8 @@ widget.attach()
       elm.removeEventListener(evt, handler._bound)
     }else if (elm.attachEvent){
       elm.detachEvent('on' + evt, handler._bound)
+    }else if (elm.on && elm.removeListener){
+      elm.removeListener(evt, handler._bound)
     }
     delete handler._bound
   }

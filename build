@@ -1,0 +1,3 @@
+#! /bin/bash
+
+browserify examples/bs_example.js -o examples/bs_example_bundle.js

@@ -1,0 +1,32 @@
+<!doctype html>
+<head>
+</head>
+<body>
+<h1>Hello</h1>
+<a id="link" href="http://google.com">Click Me</script>
+<script src="../index.js"></script>
+<script>
+function Widget(elm){
+  this.elm = elm
+}
+
+extend(Widget.prototype, DOMListener)
+
+extend(Widget.prototype, {
+  "elm:onclick": function(e){
+    e.preventDefault()
+    console.log('You clicked')
+  }
+})
+
+function extend(dst, src){
+  for (var key in src){
+    dst[key] = src[key]
+  }
+}
+
+var widget = new Widget(document.getElementById('link'))
+widget.attach()
+</script>
+</body>
+</html>

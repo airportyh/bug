@@ -1,7 +1,3 @@
-test('it mixes into object', function(){
-  var o = {}
-  extend(o, DomListener)
-})
 
 test('when attached listens to specified dom event', function(){
   var called = false
@@ -14,7 +10,7 @@ test('when attached listens to specified dom event', function(){
       called = true
     }
   }
-  extend(o, DomListener)
+  extend(o, DOMListener)
   o.attach()
   Simulate.click(elm)
   ok(called, "how come you don't call?")
@@ -31,7 +27,7 @@ test('when detached no longer listens', function(){
       called = true
     }
   }
-  extend(o, DomListener)
+  extend(o, DOMListener)
   o.attach()
   o.detach()
   Simulate.click(elm)
@@ -52,12 +48,27 @@ test('it doesnt bound twice if attached twice', function(){
       callCount++
     }
   }
-  extend(o, DomListener)
+  extend(o, DOMListener)
   o.attach()
   o.attach()
   Simulate.click(elm)
   equal(callCount, 1)
   document.body.removeChild(elm)
+})
+
+test('it also binds event emitters', function(){
+  expect(1)
+  var foo = {}
+  var bar = foo.bar = {}
+  extend(bar, EventEmitter.prototype)
+  extend(foo, DOMListener)
+  foo['bar:onmessage'] = function(msg){
+    equal(msg, 'hello')
+  }
+  foo.attach()
+  bar.emit('message', 'hello')
+  foo.detach()
+  bar.emit('message', 'hello')
 })
 
 

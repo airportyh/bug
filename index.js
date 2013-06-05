@@ -51,6 +51,7 @@
   }
 
   function unlisten(elm, evt, handler){
+    if (handler._bound) return
     if (elm.removeEventListener){
       elm.removeEventListener(evt, handler._bound)
     }else if (elm.attachEvent){

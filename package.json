@@ -1,6 +1,6 @@
 {
   "name": "bug",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A mixin that allows object to easily listen in on child objects.",
   "main": "index.js",
   "directories": {

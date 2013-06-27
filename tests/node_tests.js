@@ -1,5 +1,5 @@
 var test = require('tape')
-var Bug = require('./index')
+var Bug = require('../index')
 var EventEmitter = require('events').EventEmitter
 
 test('it also binds event emitters', function(t){

@@ -1,15 +1,14 @@
 framework: qunit
-serve_files:
-- underscore.js
-- backbone.js
-- event_emitter.js
-- simulate.js
+src_files:
+- tests/underscore.js
+- tests/backbone.js
+- tests/event_emitter.js
+- tests/simulate.js
+- tests/tests.js
 - index.js
-- tests.js
-
 launchers:
   node:
-    command: node node_tests.js
+    command: node tests/node_tests.js
     protocol: tap
 launch_in_dev:
 - chrome

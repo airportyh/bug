@@ -5,7 +5,7 @@ test('when attached listens to specified dom event', function(){
   document.body.appendChild(elm)
   var o = {
     elm: elm,
-    "elm:onclick": function(e){
+    "elm:click": function(e){
       equal(e.type, 'click')
       called = true
     }
@@ -23,7 +23,7 @@ test('when detached no longer listens', function(){
   document.body.appendChild(elm)
   var o = {
     elm: elm,
-    "elm:onclick": function(e){
+    "elm:click": function(e){
       called = true
     }
   }
@@ -34,7 +34,7 @@ test('when detached no longer listens', function(){
   ok(!called, "don't call anymore")
 
   // cleans up
-  ok(undefined === o['elm:onclick']._bound)
+  ok(undefined === o['elm:click']._bound)
   document.body.removeChild(elm)
 })
 
@@ -44,7 +44,7 @@ test('it doesnt bound twice if attached twice', function(){
   document.body.appendChild(elm)
   var o = {
     elm: elm,
-    "elm:onclick": function(e){
+    "elm:click": function(e){
       callCount++
     }
   }
@@ -62,7 +62,7 @@ test('it also binds event emitters', function(){
   var bar = foo.bar = {}
   extend(bar, EventEmitter.prototype)
   extend(foo, Bug)
-  foo['bar:onmessage'] = function(msg){
+  foo['bar:message'] = function(msg){
     equal(msg, 'hello')
   }
   foo.attach()
@@ -71,6 +71,12 @@ test('it also binds event emitters', function(){
   bar.emit('message', 'hello')
 })
 
+test('it doesnt bomb if the the property is null', function(){
+  var foo = {}
+  foo['bar:message'] = function(){}
+  Bug.attach.call(foo)
+  ok(true)
+})
 
 function extend(dst, src){
   for (var prop in src)

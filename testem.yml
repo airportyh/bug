@@ -1,4 +1,10 @@
 framework: qunit
+serve_files:
+- event_emitter.js
+- simulate.js
+- index.js
+- tests.js
+
 launchers:
   node:
     command: node node_tests.js

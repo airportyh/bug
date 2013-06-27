@@ -1,6 +1,6 @@
 (function(){
 
-  var EventPropReg = /^([a-zA-Z][$a-zA-Z0-9]+):on([a-z]+)$/
+  var EventPropReg = /^([a-zA-Z][$a-zA-Z0-9]+):([a-z]+)$/
 
   var Bug = {
     attach: function(){
@@ -40,6 +40,7 @@
 
   function listen(elm, evt, handler){
     if (handler._bound) return
+    if (!elm) return
     handler._bound = bind(handler, this)
     if (elm.addEventListener){
       elm.addEventListener(evt, handler._bound)

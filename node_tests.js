@@ -8,7 +8,7 @@ test('it also binds event emitters', function(t){
   var bar = foo.bar = {}
   extend(bar, EventEmitter.prototype)
   extend(foo, DOMListener)
-  foo['bar:onmessage'] = function(msg){
+  foo['bar:message'] = function(msg){
     t.equal(msg, 'hello')
   }
   foo.attach()

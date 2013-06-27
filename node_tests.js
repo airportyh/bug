@@ -1,5 +1,5 @@
 var test = require('tape')
-var DOMListener = require('./index')
+var Bug = require('./index')
 var EventEmitter = require('events').EventEmitter
 
 test('it also binds event emitters', function(t){
@@ -7,13 +7,12 @@ test('it also binds event emitters', function(t){
   var foo = {}
   var bar = foo.bar = {}
   extend(bar, EventEmitter.prototype)
-  extend(foo, DOMListener)
   foo['bar:message'] = function(msg){
     t.equal(msg, 'hello')
   }
-  foo.attach()
+  Bug.attach(foo)
   bar.emit('message', 'hello')
-  foo.detach()
+  Bug.detach(foo)
   bar.emit('message', 'hello')
 })
 

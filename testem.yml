@@ -1,5 +1,7 @@
 framework: qunit
 serve_files:
+- underscore.js
+- backbone.js
 - event_emitter.js
 - simulate.js
 - index.js

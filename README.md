@@ -1,80 +1,57 @@
-Bug
-===========
+Bug - Listening Device for JS Objects
+=====================================
 
-A Javascript mixin that conviniently handles binding to a DOM element for a widget class that you might write.
+A tiny Javascript library that conviniently handles event binding between objects. It works with the event apis for DOM elements, Node style event emitters api (on/removeListener), and the jQuery/Backbone style on/off api.
 
-When you mixin `Bug` to your own Javascript object, like so
-
-    extend(MyWidget.prototype, Bug)
-
-You get two extra methods: 
-
-  * `attach()` - which attachs all event handlers specified (see below) and 
-  * `detach()` - which detaches all of them.
-
-The event handlers in your object are specified by naming the property in the format `<property>:on<event>`. For example, the following event handler will attach to the `click` event of the element stored in the `elm` property of the object.
-
-    "elm:onclick": function(e){
-    }
-
-Install with Bower
-------------------
+## Install with Bower
 
     bower install bug
 
-Install with NPM
-----------------
+## Install with NPM
 
     npm install bug
 
-Full Example
-------------
+## Usage
+
+Here is an example of the usage of bug. Let's say we were to write a widget that operates on a DOM element and wants to handle click events on that element:
   
     function Widget(elm){
       this.elm = elm
-      this.attach() // attach all event handlers in the
-                    // specified format
+      Bug.attach(this) // attach all event handlers 
+                       // defined, see below
     }
   
-    extend(Widget.prototype, Bug)
-  
-    extend(Widget.prototype, {
+    Widget.prototype = {
       // the following event handler will handle all
       // "click" events to the DOM element in the "elm"
       // property
-      "elm:onclick": function(e){
+      "elm:click": function(e){
         console.log('elm was clicked!')
       },
       destroy: function(){
-        this.detach() // detaches all event handlers in the
-                      // specified format
+        Bug.detach(this) // detaches all event handlers in the
+                         // specified format
       }
-    })
-  
-    // a simple extend which behaves like underscore's extend
-    function extend(dst, src){
-      for (var prop in src)
-        dst[prop] = src[prop]
     }
 
-On Event Emitters
------------------
+## API
 
-Bug also can listen to event emitters. This is an example in node
+Bug has 2 methods: 
 
-    var Bug = require('bug')
-    var EventEmitter = require('events').EventEmitter
+  * `attach()` - attachs all event handlers specified (see below) and 
+  * `detach()` - detaches all of them.
 
-    var bar = new EventEmitter
-    var foo = {
-      "bar:onmessage": function(msg){
-        console.log("Got message", msg)
-      },
-      bar: bar
+The event handlers in your object are specified by naming the property in the format `<property>:<event>`. For example, the following event handler will attach to the `click` event of the object stored in the `elm` property of the object.
+
+    "button:click": function(e){
+      console.log('You click me! You really click me!')
     }
-    extend(obj, Bug)
-    obj.attach()
-    bar.emit('message', 'Hello!')
+
+The `button` property can have the value of one of three kinds of objects
+
+1. a raw DOM element
+2. an object with an `on(event, callback)` method and an `off(event, callback)` method, as is the case with jQuery wrapped objects and Backbone models
+3. an object with an `on(event, callback)` method and a `removeListener(event, callback)` method, as is the case with Node event emitters
 
 Browser Support
 ---------------

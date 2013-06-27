@@ -10,8 +10,7 @@ test('when attached listens to specified dom event', function(){
       called = true
     }
   }
-  extend(o, Bug)
-  o.attach()
+  Bug.attach(o)
   Simulate.click(elm)
   ok(called, "how come you don't call?")
   document.body.removeChild(elm)
@@ -27,9 +26,9 @@ test('when detached no longer listens', function(){
       called = true
     }
   }
-  extend(o, Bug)
-  o.attach()
-  o.detach()
+  
+  Bug.attach(o)
+  Bug.detach(o)
   Simulate.click(elm)
   ok(!called, "don't call anymore")
 
@@ -48,9 +47,8 @@ test('it doesnt bound twice if attached twice', function(){
       callCount++
     }
   }
-  extend(o, Bug)
-  o.attach()
-  o.attach()
+  Bug.attach(o)
+  Bug.attach(o)
   Simulate.click(elm)
   equal(callCount, 1)
   document.body.removeChild(elm)
@@ -61,14 +59,25 @@ test('it also binds event emitters', function(){
   var foo = {}
   var bar = foo.bar = {}
   extend(bar, EventEmitter.prototype)
-  extend(foo, Bug)
   foo['bar:message'] = function(msg){
     equal(msg, 'hello')
   }
-  foo.attach()
+  Bug.attach(foo)
   bar.emit('message', 'hello')
-  foo.detach()
+  Bug.detach(foo)
   bar.emit('message', 'hello')
+})
+
+test('supports on/off api', function(){
+  var called = false
+  var model = new Backbone.Model
+  var foo = {model: model}
+  foo['model:blah'] = function(){
+    called = true
+  }
+  Bug.attach(foo)
+  model.trigger('blah')
+  ok(called)
 })
 
 test('it doesnt bomb if the the property is null', function(){

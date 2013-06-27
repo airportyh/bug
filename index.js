@@ -3,11 +3,11 @@
   var EventPropReg = /^([a-zA-Z][$a-zA-Z0-9]+):([a-z]+)$/
 
   var Bug = {
-    attach: function(){
-      iterateAndCallFuncOnMatch.call(this, listen)
+    attach: function(obj){
+      iterateAndCallFuncOnMatch.call(obj, listen)
     },
-    detach: function(){
-      iterateAndCallFuncOnMatch.call(this, unlisten)
+    detach: function(obj){
+      iterateAndCallFuncOnMatch.call(obj, unlisten)
     }
   }
 
@@ -24,10 +24,10 @@
     for (var key in this){
       var m
       if (m = key.match(EventPropReg)){
-        var elm = this[m[1]]
+        var obj = this[m[1]]
         var evt = m[2]
         var value = this[key]
-        func.call(this, elm, evt, value)
+        func.call(this, obj, evt, value)
       }
     }
   }
@@ -38,27 +38,31 @@
     }
   }
 
-  function listen(elm, evt, handler){
+  function listen(obj, evt, handler){
     if (handler._bound) return
-    if (!elm) return
+    if (!obj) return
     handler._bound = bind(handler, this)
-    if (elm.addEventListener){
-      elm.addEventListener(evt, handler._bound)
-    }else if (elm.attachEvent){
-      elm.attachEvent('on' + evt, handler._bound)
-    }else if (elm.on && elm.removeListener){
-      elm.on(evt, handler._bound)
+    if (obj.addEventListener){
+      obj.addEventListener(evt, handler._bound)
+    }else if (obj.attachEvent){
+      obj.attachEvent('on' + evt, handler._bound)
+    }else if (obj.on && obj.off){
+      obj.on(evt, handler._bound)
+    }else if (obj.on && obj.removeListener){
+      obj.on(evt, handler._bound)
     }
   }
 
-  function unlisten(elm, evt, handler){
+  function unlisten(obj, evt, handler){
     if (!handler._bound) return
-    if (elm.removeEventListener){
-      elm.removeEventListener(evt, handler._bound)
-    }else if (elm.attachEvent){
-      elm.detachEvent('on' + evt, handler._bound)
-    }else if (elm.on && elm.removeListener){
-      elm.removeListener(evt, handler._bound)
+    if (obj.removeEventListener){
+      obj.removeEventListener(evt, handler._bound)
+    }else if (obj.attachEvent){
+      obj.detachEvent('on' + evt, handler._bound)
+    }else if (obj.on && obj.off){
+      obj.off(evt, handler._bound)
+    }else if (obj.on && obj.removeListener){
+      obj.removeListener(evt, handler._bound)
     }
     delete handler._bound
   }

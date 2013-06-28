@@ -83,8 +83,24 @@ test('supports on/off api', function(){
 test('it doesnt bomb if the the property is null', function(){
   var foo = {}
   foo['bar:message'] = function(){}
-  Bug.attach.call(foo)
+  Bug.attach(foo)
   ok(true)
+})
+
+test('reattachs to different target', function(){
+  var called = false
+  var e1 = new EventEmitter
+  var e2 = new EventEmitter
+  var foo = {}
+  foo.bar = e1
+  foo['bar:data'] = function(){
+    called = true
+  }
+  Bug.attach(foo)
+  foo.bar = e2
+  Bug.attach(foo)
+  e2.emit('data')
+  ok(called)
 })
 
 function extend(dst, src){

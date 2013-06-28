@@ -33,36 +33,45 @@
   }
 
   function bind(fn, obj){
-    return function(){
+    var fun = function(){
       return fn.apply(obj, arguments)
+    }
+    return {
+      context: obj,
+      fun: fun
     }
   }
 
   function listen(obj, evt, handler){
-    if (handler._bound) return
+    if (handler._bound){
+      if (obj === handler._bound.context) return
+      unlisten(obj, evt, handler)
+    }
     if (!obj) return
     handler._bound = bind(handler, this)
+    var fun = handler._bound.fun
     if (obj.addEventListener){
-      obj.addEventListener(evt, handler._bound)
+      obj.addEventListener(evt, fun)
     }else if (obj.attachEvent){
-      obj.attachEvent('on' + evt, handler._bound)
+      obj.attachEvent('on' + evt, fun)
     }else if (obj.on && obj.off){
-      obj.on(evt, handler._bound)
+      obj.on(evt, fun)
     }else if (obj.on && obj.removeListener){
-      obj.on(evt, handler._bound)
+      obj.on(evt, fun)
     }
   }
 
   function unlisten(obj, evt, handler){
     if (!handler._bound) return
+    var fun = handler._bound.fun
     if (obj.removeEventListener){
-      obj.removeEventListener(evt, handler._bound)
+      obj.removeEventListener(evt, fun)
     }else if (obj.attachEvent){
-      obj.detachEvent('on' + evt, handler._bound)
+      obj.detachEvent('on' + evt, fun)
     }else if (obj.on && obj.off){
-      obj.off(evt, handler._bound)
+      obj.off(evt, fun)
     }else if (obj.on && obj.removeListener){
-      obj.removeListener(evt, handler._bound)
+      obj.removeListener(evt, fun)
     }
     delete handler._bound
   }

@@ -1,0 +1,8 @@
+{
+  "name": "bug",
+  "repo": "airportyh/bug",
+  "description": "Convinient event binding/unbinding utility. \"Listening device for JavaScript.\"",
+  "main": "index.js",
+  "scripts": ["index.js"],
+  "keywords": ["events"]
+}
